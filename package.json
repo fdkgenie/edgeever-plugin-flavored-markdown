@@ -1,0 +1,22 @@
+{
+  "name": "edgeever-plugin-flavored-markdown",
+  "version": "1.0.0",
+  "description": "Obsidian Flavored Markdown (OFM) plugin for EdgeEver.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fdkgenie/edgeever-plugin-flavored-markdown.git"
+  },
+  "scripts": {
+    "build": "bun ./scripts/build.mjs",
+    "test": "bun test ./tests",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "oxlint --deny-warnings src scripts tests"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.13",
+    "oxlint": "^1.88.0",
+    "typescript": "6.0.3"
+  }
+}

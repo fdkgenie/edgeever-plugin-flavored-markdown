@@ -1,0 +1,309 @@
+{
+  "type": "plugin",
+  "id": "com.edgeever.flavored-markdown",
+  "name": "Flavored Markdown",
+  "version": "1.0.0",
+  "apiVersion": "2",
+  "settingsUi": "host",
+  "description": "Obsidian Flavored Markdown support: wikilinks, note & media embeds, block references, foldable callouts, highlights, comments, footnotes, math, and backlinks.",
+  "locales": {
+    "zh-CN": {
+      "name": "Flavored Markdown (OFM)",
+      "description": "支持 Obsidian 风格 Markdown：双链 [[Wikilinks]]、笔记与媒体嵌入 ![[Embeds]]、块引用 ^id、可折叠标注 Callout、高亮 ==text==、注释 %%text%%、脚注、数学公式与反向链接。"
+    },
+    "vi": {
+      "name": "Flavored Markdown (OFM)",
+      "description": "Hỗ trợ Obsidian Flavored Markdown: liên kết [[Wikilinks]], nhúng ghi chú & media ![[Embeds]], tham chiếu khối ^id, hộp ghi chú Callout gập mở, tô sáng ==text==, chú thích ẩn %%text%%, chú thích chân trang, công thức toán và backlinks."
+    }
+  },
+  "author": "fdkgenie",
+  "entry": "./main.js",
+  "platforms": ["web", "desktop"],
+  "permissions": [
+    "notes:read",
+    "notes:write",
+    "metadata:read",
+    "resources:read",
+    "editor:read",
+    "editor:write",
+    "ui:commands",
+    "ui:navigation",
+    "ui:notices",
+    "ui:panels",
+    "storage"
+  ],
+  "settings": {
+    "fields": [
+      {
+        "key": "syntax.wikilinks",
+        "type": "boolean",
+        "label": "Wikilinks ([[Note]])",
+        "description": "Enable internal [[Note]], [[Note|Alias]], [[Note#Heading]], and [[Note#^block]] links.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "双链 ([[Note]])",
+            "description": "启用 [[笔记]]、[[笔记|别名]]、[[笔记#标题]] 与 [[笔记#^块]] 内部链接。"
+          },
+          "vi": {
+            "label": "Wikilinks ([[Note]])",
+            "description": "Bật liên kết nội bộ [[Ghi chú]], [[Ghi chú|Tên hiển thị]], [[Ghi chú#Tiêu đề]] và [[Ghi chú#^khối]]."
+          }
+        }
+      },
+      {
+        "key": "syntax.embeds",
+        "type": "boolean",
+        "label": "Embeds (![[Target]])",
+        "description": "Enable transclusion of notes, headings, block IDs, and note media attachments via ![[Target]].",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "嵌入 (![[Target]])",
+            "description": "启用 ![[笔记]]、标题片段、块引用及媒体附件嵌入预览。"
+          },
+          "vi": {
+            "label": "Nhúng nội dung (![[Target]])",
+            "description": "Cho phép nhúng ghi chú, đề mục, khối ^id và tệp đính kèm media qua ![[Target]]."
+          }
+        }
+      },
+      {
+        "key": "syntax.callouts",
+        "type": "boolean",
+        "label": "Callouts (> [!note])",
+        "description": "Render Obsidian callout blocks including foldable (+ / -) and nested callouts.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "标注块 (> [!note])",
+            "description": "渲染 Obsidian 标注块，支持默认展开/折叠 (+ / -) 与嵌套标注。"
+          },
+          "vi": {
+            "label": "Hộp Callouts (> [!note])",
+            "description": "Hiển thị các khối Callout kiểu Obsidian hỗ trợ gập mở (+ / -) và lồng nhau."
+          }
+        }
+      },
+      {
+        "key": "syntax.highlights",
+        "type": "boolean",
+        "label": "Highlights (==text==)",
+        "description": "Render ==text== as highlighted text.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "文本高亮 (==text==)",
+            "description": "将 ==text== 渲染为高亮文本。"
+          },
+          "vi": {
+            "label": "Tô sáng (==text==)",
+            "description": "Hiển thị ==text== dưới dạng văn bản được tô sáng."
+          }
+        }
+      },
+      {
+        "key": "syntax.comments",
+        "type": "boolean",
+        "label": "Comments (%%text%%)",
+        "description": "Parse inline and multi-line %%Obsidian comments%%.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "隐藏注释 (%%text%%)",
+            "description": "解析行内与多行 %%Obsidian 注释%%。"
+          },
+          "vi": {
+            "label": "Chú thích ẩn (%%text%%)",
+            "description": "Phân tích cú pháp chú thích nội dòng và nhiều dòng %%text%%."
+          }
+        }
+      },
+      {
+        "key": "syntax.footnotes",
+        "type": "boolean",
+        "label": "Footnotes ([^id])",
+        "description": "Parse [^id] footnote references, definitions, and inline ^[text] footnotes.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "脚注 ([^id])",
+            "description": "解析 [^id] 脚注引用、多行脚注定义与行内 ^[文本] 脚注。"
+          },
+          "vi": {
+            "label": "Chú thích chân trang ([^id])",
+            "description": "Phân tích tham chiếu [^id], định nghĩa nhiều dòng và chú thích nội dòng ^[text]."
+          }
+        }
+      },
+      {
+        "key": "syntax.block_ids",
+        "type": "boolean",
+        "label": "Block IDs (^id)",
+        "description": "Recognize ^block-id anchors on paragraphs, lists, quotes, tables, and standalone lines.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "块标识 (^id)",
+            "description": "识别段落、列表、引用、表格末尾或独立行的 ^block-id 锚点。"
+          },
+          "vi": {
+            "label": "Định danh khối (^id)",
+            "description": "Nhận diện neo ^block-id cuối đoạn văn, danh sách, trích dẫn, bảng hoặc dòng riêng."
+          }
+        }
+      },
+      {
+        "key": "syntax.math",
+        "type": "boolean",
+        "label": "LaTeX Math ($...$ / $$...$$)",
+        "description": "Render inline $...$ and display $$...$$ LaTeX math expressions without matching currency like $100.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "LaTeX 公式 ($...$ / $$...$$)",
+            "description": "渲染行内 $...$ 与块级 $$...$$ 数学公式，并避免误匹配 $100 等货币数字。"
+          },
+          "vi": {
+            "label": "Toán học LaTeX ($...$ / $$...$$)",
+            "description": "Hiển thị biểu thức toán học nội dòng $...$ và khối $$...$$ mà không nhận nhầm số tiền như $100."
+          }
+        }
+      },
+      {
+        "key": "syntax.strict_html",
+        "type": "boolean",
+        "label": "Strict Obsidian HTML",
+        "description": "Do not parse Markdown syntax inside HTML elements, matching Obsidian Flavored Markdown rules.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "严格 HTML 边界",
+            "description": "遵循 Obsidian 规范，不在 HTML 标签内部解析 Markdown 语法。"
+          },
+          "vi": {
+            "label": "HTML chuẩn Obsidian",
+            "description": "Không phân tích cú pháp Markdown bên trong thẻ HTML, đúng theo chuẩn Obsidian Flavored Markdown."
+          }
+        }
+      },
+      {
+        "key": "reader.show_comments",
+        "type": "boolean",
+        "label": "Show %%comments%% in Reader",
+        "description": "Display %%Obsidian comments%% as subtle badges in the OFM Reader instead of hiding them.",
+        "default": false,
+        "locales": {
+          "zh-CN": {
+            "label": "在阅读视图中显示 %%注释%%",
+            "description": "在 OFM 阅读器中以提示徽章形式展示 %%注释%%，而不是完全隐藏。"
+          },
+          "vi": {
+            "label": "Hiện %%chú thích%% trong Reader",
+            "description": "Hiển thị %%chú thích%% dạng nhãn mờ trong OFM Reader thay vì ẩn hoàn toàn."
+          }
+        }
+      },
+      {
+        "key": "reader.show_block_ids",
+        "type": "boolean",
+        "label": "Show ^block-id badges in Reader",
+        "description": "Show clickable ^block-id pills that copy [[Note#^id]] references.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "在阅读视图中显示 ^block-id 徽章",
+            "description": "显示可点击复制 [[笔记#^id]] 引用的块标识徽章。"
+          },
+          "vi": {
+            "label": "Hiện nhãn ^block-id trong Reader",
+            "description": "Hiển thị thẻ ^block-id có thể bấm để sao chép liên kết [[Ghi chú#^id]]."
+          }
+        }
+      },
+      {
+        "key": "reader.max_embed_depth",
+        "type": "number",
+        "label": "Max embed depth",
+        "description": "Maximum recursive nesting depth for ![[Note]] transclusions (1 to 6).",
+        "default": 3,
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "locales": {
+          "zh-CN": {
+            "label": "最大嵌套嵌入深度",
+            "description": "控制 ![[笔记]] 递归嵌入的最大层级（1 到 6）。"
+          },
+          "vi": {
+            "label": "Độ sâu nhúng tối đa",
+            "description": "Giới hạn số tầng nhúng lồng nhau cho ![[Ghi chú]] (từ 1 đến 6)."
+          }
+        }
+      },
+      {
+        "key": "editor.wikilink_autocomplete",
+        "type": "boolean",
+        "label": "Wikilink [[ autocomplete",
+        "description": "Show a floating note, heading, and block suggestion popover while typing [[ in the active editor.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "输入 [[ 自动补全双链",
+            "description": "在编辑器中输入 [[ 时弹出笔记、标题与块标识候选列表。"
+          },
+          "vi": {
+            "label": "Tự động gợi ý khi gõ [[",
+            "description": "Hiện bảng gợi ý ghi chú, đề mục và khối ^id khi gõ [[ trong trình soạn thảo."
+          }
+        }
+      },
+      {
+        "key": "editor.ctrl_click_open",
+        "type": "boolean",
+        "label": "Ctrl/Cmd+Click [[Wikilink]] to open",
+        "description": "Open or create the target note when Ctrl+clicking (Cmd+clicking on macOS) a [[Wikilink]] inside the editor.",
+        "default": true,
+        "locales": {
+          "zh-CN": {
+            "label": "Ctrl/Cmd+点击打开 [[双链]]",
+            "description": "在编辑器中按住 Ctrl/Cmd 点击 [[双链]] 时跳转到目标笔记。"
+          },
+          "vi": {
+            "label": "Ctrl/Cmd+Click để mở [[Wikilink]]",
+            "description": "Mở hoặc tạo ghi chú đích khi giữ Ctrl/Cmd và bấm vào [[Wikilink]] trong trình soạn thảo."
+          }
+        }
+      },
+      {
+        "key": "behavior.missing_note_action",
+        "type": "select",
+        "label": "Unresolved wikilink action",
+        "description": "What happens when clicking a [[Wikilink]] whose target note does not exist yet.",
+        "default": "create",
+        "options": [
+          { "value": "create", "label": "Create missing note on click" },
+          { "value": "notice", "label": "Show notice only" }
+        ],
+        "locales": {
+          "zh-CN": {
+            "label": "未创建双链点击行为",
+            "description": "点击指向尚不存在笔记的 [[双链]] 时的处理方式。",
+            "options": {
+              "create": "自动创建并打开新笔记",
+              "notice": "仅显示提示通知"
+            }
+          },
+          "vi": {
+            "label": "Khi bấm vào wikilink chưa tồn tại",
+            "description": "Hành động khi bấm vào [[Wikilink]] trỏ tới ghi chú chưa được tạo.",
+            "options": {
+              "create": "Tự động tạo và mở ghi chú mới",
+              "notice": "Chỉ hiện thông báo"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
